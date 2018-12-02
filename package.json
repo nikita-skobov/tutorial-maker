@@ -1,0 +1,19 @@
+{
+  "name": "tutorial-maker",
+  "version": "0.0.1",
+  "description": "a tool built on top of puppeteer to take screenshots of pages and add your own anotations to make tutorials.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tutorial",
+    "maker",
+    "puppeteer"
+  ],
+  "author": "nikita skobov",
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^1.11.0"
+  }
+}
