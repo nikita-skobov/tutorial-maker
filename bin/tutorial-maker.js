@@ -8,13 +8,22 @@ async function main() {
   const width = 1600
   const height = 800
 
+  let pathPrefix = '.'
+
   const reader = new commandLine({
-    commands: ['hellp', 'butt', 'bad', 'bit', 'quit'],
+    commands: ['snap', 'path', 'quit'],
     commandFunctions: {
       quit: async (ref, args) => {
         console.log(args)
         await browser.quit()
         ref.quit()
+      },
+      path: async (ref, args) => {
+        const prefix = args
+        if (!fs.existsSync(prefix)) {
+          fs.mkdirSync(prefix)
+        }
+        pathPrefix = prefix
       },
     },
   })
