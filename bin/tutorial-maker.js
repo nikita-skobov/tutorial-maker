@@ -56,7 +56,7 @@ async function main() {
             console.warn('\n')
           }
         } else {
-          console.warn(`Must specify a file name`)
+          console.warn(`Must specify a file name\n`)
         }
       },
     },
