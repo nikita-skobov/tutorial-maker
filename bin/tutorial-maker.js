@@ -61,7 +61,7 @@ async function main() {
           return null
         }
 
-        console.log(`Wrote: ${text}\n\n to file: ${currentWrite}`)
+        console.log(`Appended: \n${text}\n\nto in-memory file: ${currentWrite}`)
       },
       quit: async (ref, args) => {
         await browser.quit()
