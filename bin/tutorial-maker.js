@@ -18,7 +18,6 @@ async function main() {
     commands: ['snap', 'path', 'quit'],
     commandFunctions: {
       quit: async (ref, args) => {
-        console.log(args)
         await browser.quit()
         ref.quit()
       },
