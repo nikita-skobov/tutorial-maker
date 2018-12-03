@@ -18,7 +18,7 @@ async function main() {
 
   const reader = new commandLine({
     completer: true,
-    commands: ['snap', 'quit', 'cd', 'write'],
+    commands: ['snap', 'quit', 'cd', 'write', 'save'],
     commandFunctions: {
       DEFAULT: async (ref, command, args, input) => {
         // if command not found it passes everything from user input to DEFAULT
@@ -29,6 +29,28 @@ async function main() {
 
           console.log(stdout)
           console.log(stderr)
+        })
+      },
+      save: async (ref, args) => {
+        let file = currentWrite
+
+        if (has.call(args.object, 'file')) {
+          file = args.object.file
+        } else if (has.call(args.object, 'f')) {
+          file = args.object.f
+        }
+
+        if (!file) {
+          console.warn('Cannot save empty file')
+          return null
+        }
+
+        fs.writeFile(file, writeObjects[file], (err) => {
+          if (err) {
+            console.warn(`FAILED to write to file: ${file}`)
+          } else {
+            console.log(`succesfully saved file: ${file}`)
+          }
         })
       },
       write: async (ref, args) => {
