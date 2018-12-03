@@ -41,7 +41,7 @@ async function main() {
           file = args.object.f
         }
 
-        text = args.list[0]
+        text = args.list.join(' ')
 
         if (file) {
           // user specified a file
