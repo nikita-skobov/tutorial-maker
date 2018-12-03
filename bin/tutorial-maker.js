@@ -35,10 +35,15 @@ async function main() {
       },
       path: async (ref, args) => {
         const prefix = args.list[0]
-        if (!fs.existsSync(prefix)) {
+
+        let shouldMakeDir = true
+        if (prefix === '.' || prefix === '..') shouldMakeDir = false
+
+        if (shouldMakeDir && !fs.existsSync(prefix)) {
           fs.mkdirSync(prefix)
         }
         pathPrefix = prefix
+        process.chdir(`./${pathPrefix}`)
 
         console.log(`Currently inside directory: ./${pathPrefix}\n`)
       },
