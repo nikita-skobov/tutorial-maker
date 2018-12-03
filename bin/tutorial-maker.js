@@ -21,14 +21,15 @@ async function main() {
         ref.quit()
       },
       path: async (ref, args) => {
-        const prefix = args
+        const prefix = args.list[0]
         if (!fs.existsSync(prefix)) {
           fs.mkdirSync(prefix)
         }
         pathPrefix = prefix
       },
       snap: async (ref, args) => {
-        await browser.page.screenshot({ path: `${pathPrefix}/${args}` })
+        const filename = args.list[0]
+        await browser.page.screenshot({ path: `${pathPrefix}/${filename}` })
       },
     },
   })
