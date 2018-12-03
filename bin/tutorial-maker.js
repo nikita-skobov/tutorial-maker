@@ -14,7 +14,7 @@ async function main() {
       quit: async (ref, args) => {
         console.log(args)
         await browser.quit()
-        ref.interface.close()
+        ref.quit()
       },
     },
   })
