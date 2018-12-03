@@ -17,6 +17,11 @@ async function main() {
     completer: true,
     commands: ['snap', 'path', 'quit'],
     commandFunctions: {
+      DEFAULT: async (ref, command, args) => {
+        // if command not found it passes everything from user input to DEFAULT
+        console.log(command)
+        console.log(args)
+      },
       quit: async (ref, args) => {
         await browser.quit()
         ref.quit()
