@@ -27,6 +27,8 @@ async function main() {
           fs.mkdirSync(prefix)
         }
         pathPrefix = prefix
+
+        console.log(`Currently inside directory: ./${pathPrefix}\n`)
       },
       snap: async (ref, args) => {
         const { object, list } = args
