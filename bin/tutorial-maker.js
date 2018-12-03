@@ -99,6 +99,8 @@ async function main() {
         const { object, list } = args
         let filename = args.list[0]
         let prefix = '.'
+        let appendImageLine = false
+
         if (has.call(object, 'path')) {
           prefix = object.path
         }
@@ -114,9 +116,18 @@ async function main() {
             filename = `${filename}.jpg` // default to jpg if user does not provide a type
           }
 
+          if ((has.call(object, 'a') || has.call(object, 'append')) && currentWrite) {
+            appendImageLine = `![${filename}](${prefix}/${filename})\n\n`
+          }
+
           try {
             await browser.page.screenshot({ path: `${prefix}/${filename}` })
             console.log(`Successfully saved screenshot to: ${prefix}/${filename}\n`)
+            
+            if (appendImageLine) {
+              writeObjects[currentWrite] = `${writeObjects[currentWrite]}${appendImageLine}`
+              console.log(`Appended image to in-memory file: ${currentWrite}`)
+            }
           } catch (e) {
             console.warn(`Failed to save screenshot to: ${prefix}/${filename}`)
             console.warn(e)
