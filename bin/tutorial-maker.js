@@ -3,6 +3,7 @@
 const puppeteer = require('../lib/puppeteer')
 const commandLine = require('../lib/commandLine')
 const fs = require('fs')
+const { exec } = require('child_process')
 
 const has = Object.prototype.hasOwnProperty
 
@@ -19,9 +20,14 @@ async function main() {
     commandFunctions: {
       DEFAULT: async (ref, command, args, input) => {
         // if command not found it passes everything from user input to DEFAULT
-        console.log(command)
-        console.log(args)
-        console.log(input)
+        exec(input, (err, stdout, stderr) => {
+          if (err) {
+            console.warn(err)
+          }
+
+          console.log(stdout)
+          console.log(stderr)
+        })
       },
       quit: async (ref, args) => {
         await browser.quit()
