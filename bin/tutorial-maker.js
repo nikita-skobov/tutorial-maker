@@ -8,7 +8,16 @@ async function main() {
   const width = 1600
   const height = 800
 
-  const reader = new commandLine({ commands: ['hellp', 'butt', 'bad', 'bit'] })
+  const reader = new commandLine({
+    commands: ['hellp', 'butt', 'bad', 'bit', 'quit'],
+    commandFunctions: {
+      quit: async (ref, args) => {
+        console.log(args)
+        await browser.quit()
+        ref.interface.close()
+      },
+    },
+  })
 
   let browser = null
   let answer = await reader.ask(`Use default width and height: ${width} x ${height}? (Y or N)\n`)
