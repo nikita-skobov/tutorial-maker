@@ -12,11 +12,10 @@ async function main() {
   const width = 1600
   const height = 800
 
-  let pathPrefix = '.'
 
   const reader = new commandLine({
     completer: true,
-    commands: ['snap', 'path', 'quit', 'cd'],
+    commands: ['snap', 'quit', 'cd'],
     commandFunctions: {
       DEFAULT: async (ref, command, args, input) => {
         // if command not found it passes everything from user input to DEFAULT
@@ -36,32 +35,13 @@ async function main() {
       cd: async (ref, args) => {
         const dir = args.list[0]
 
-        process.chdir(`./${dir}`)
+        process.chdir(dir)
         console.log(`Currently inside directory: ${process.cwd()}\n`)
-      },
-      path: async (ref, args) => {
-        const prefix = args.list[0]
-
-        const shouldChangeDir = has.call(args.object, 'cd')
-        let shouldMakeDir = true
-        if (prefix === '.' || prefix === '..') shouldMakeDir = false
-
-        if (shouldMakeDir && !fs.existsSync(prefix)) {
-          fs.mkdirSync(prefix)
-        }
-        pathPrefix = prefix
-
-        if (shouldChangeDir) {
-          process.chdir(`./${pathPrefix}`)
-          console.log(`Currently inside directory: ./${pathPrefix}\n`)
-        } else {
-          console.log(`Future files will be created in: ./${pathPrefix}\n`)
-        }
       },
       snap: async (ref, args) => {
         const { object, list } = args
         let filename = args.list[0]
-        let prefix = pathPrefix
+        let prefix = '.'
         if (has.call(object, 'path')) {
           prefix = object.path
         }
