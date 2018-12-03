@@ -70,14 +70,14 @@ async function main() {
           currentWrite = file
           if (has.call(writeObjects, currentWrite)) {
             // already exists, so append to the write string
-            writeObjects[currentWrite] = `${writeObjects[currentWrite]}${text}\n`
+            writeObjects[currentWrite] = `${writeObjects[currentWrite]}${text}\n\n`
           } else {
-            writeObjects[currentWrite] = `${text}\n`
+            writeObjects[currentWrite] = `${text}\n\n`
           }
         } else if (currentWrite) {
           // if user did not specify a file, they want to keep
           // writing to the currentWrite file
-          writeObjects[currentWrite] = `${writeObjects[currentWrite]}${text}\n`
+          writeObjects[currentWrite] = `${writeObjects[currentWrite]}${text}\n\n`
         } else {
           console.warn('Did not write anything. no file chosen')
           return null
