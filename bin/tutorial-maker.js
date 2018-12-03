@@ -4,6 +4,8 @@ const puppeteer = require('../lib/puppeteer')
 const commandLine = require('../lib/commandLine')
 const fs = require('fs')
 
+const has = Object.prototype.hasOwnProperty
+
 
 async function main() {
   const width = 1600
@@ -28,8 +30,16 @@ async function main() {
         pathPrefix = prefix
       },
       snap: async (ref, args) => {
-        const filename = args.list[0]
-        await browser.page.screenshot({ path: `${pathPrefix}/${filename}` })
+        const { object, list } = args
+        let filename = args.list[0]
+        let prefix = pathPrefix
+        if (has.call(object, 'path')) {
+          prefix = object.path
+        }
+        if (has.call(object, 'name')) {
+          filename = object.name
+        }
+        await browser.page.screenshot({ path: `${prefix}/${filename}` })
       },
     },
   })
