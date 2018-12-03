@@ -12,10 +12,13 @@ async function main() {
   const width = 1600
   const height = 800
 
+  const writeObjects = {}
+  let currentWrite = ''
+
 
   const reader = new commandLine({
     completer: true,
-    commands: ['snap', 'quit', 'cd'],
+    commands: ['snap', 'quit', 'cd', 'write'],
     commandFunctions: {
       DEFAULT: async (ref, command, args, input) => {
         // if command not found it passes everything from user input to DEFAULT
@@ -27,6 +30,33 @@ async function main() {
           console.log(stdout)
           console.log(stderr)
         })
+      },
+      write: async (ref, args) => {
+        let file = ''
+        let text = ''
+
+        if (has.call(args.object, 'file')) {
+          file = args.object.file
+        } else if (has.call(args.object, 'f')) {
+          file = args.object.f
+        }
+
+        text = args.list[0]
+
+        if (file) {
+          // user specified a file
+          currentWrite = file
+          if (has.call(writeObjects, currentWrite)) {
+            // already exists, so append to the write string
+            writeObjects[currentWrite] = `${writeObjects[currentWrite]}${text}\n`
+          } else {
+            writeObjects[currentWrite] = `${text}\n`
+          }
+        } else if (currentWrite) {
+          // if user did not specify a file, they want to keep
+          // writing to the currentWrite file
+          writeObjects[currentWrite] = `${writeObjects[currentWrite]}${text}\n`
+        }
       },
       quit: async (ref, args) => {
         await browser.quit()
