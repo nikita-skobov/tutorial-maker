@@ -16,7 +16,7 @@ async function main() {
 
   const reader = new commandLine({
     completer: true,
-    commands: ['snap', 'path', 'quit'],
+    commands: ['snap', 'path', 'quit', 'cd'],
     commandFunctions: {
       DEFAULT: async (ref, command, args, input) => {
         // if command not found it passes everything from user input to DEFAULT
@@ -32,6 +32,12 @@ async function main() {
       quit: async (ref, args) => {
         await browser.quit()
         ref.quit()
+      },
+      cd: async (ref, args) => {
+        const dir = args.list[0]
+
+        process.chdir(`./${dir}`)
+        console.log(`Currently inside directory: ${process.cwd()}\n`)
       },
       path: async (ref, args) => {
         const prefix = args.list[0]
