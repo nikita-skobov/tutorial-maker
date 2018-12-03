@@ -56,7 +56,12 @@ async function main() {
           // if user did not specify a file, they want to keep
           // writing to the currentWrite file
           writeObjects[currentWrite] = `${writeObjects[currentWrite]}${text}\n`
+        } else {
+          console.warn('Did not write anything. no file chosen')
+          return null
         }
+
+        console.log(`Wrote: ${text}\n\n to file: ${currentWrite}`)
       },
       quit: async (ref, args) => {
         await browser.quit()
