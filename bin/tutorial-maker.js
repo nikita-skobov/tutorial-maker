@@ -36,6 +36,7 @@ async function main() {
       path: async (ref, args) => {
         const prefix = args.list[0]
 
+        const shouldChangeDir = has.call(args.object, 'cd')
         let shouldMakeDir = true
         if (prefix === '.' || prefix === '..') shouldMakeDir = false
 
@@ -43,9 +44,13 @@ async function main() {
           fs.mkdirSync(prefix)
         }
         pathPrefix = prefix
-        process.chdir(`./${pathPrefix}`)
 
-        console.log(`Currently inside directory: ./${pathPrefix}\n`)
+        if (shouldChangeDir) {
+          process.chdir(`./${pathPrefix}`)
+          console.log(`Currently inside directory: ./${pathPrefix}\n`)
+        } else {
+          console.log(`Future files will be created in: ./${pathPrefix}\n`)
+        }
       },
       snap: async (ref, args) => {
         const { object, list } = args
