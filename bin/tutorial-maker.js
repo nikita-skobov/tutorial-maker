@@ -46,7 +46,15 @@ async function main() {
           if (filename.slice(-4) !== '.png' && filename.slice(-4) !== '.jpg') {
             filename = `${filename}.jpg` // default to jpg if user does not provide a type
           }
-          await browser.page.screenshot({ path: `${prefix}/${filename}` })
+
+          try {
+            await browser.page.screenshot({ path: `${prefix}/${filename}` })
+            console.log(`Successfully saved screenshot to: ${prefix}/${filename}\n`)
+          } catch (e) {
+            console.warn(`Failed to save screenshot to: ${prefix}/${filename}`)
+            console.warn(e)
+            console.warn('\n')
+          }
         } else {
           console.warn(`Must specify a file name`)
         }
