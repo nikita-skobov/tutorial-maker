@@ -39,7 +39,18 @@ async function main() {
         if (has.call(object, 'name')) {
           filename = object.name
         }
-        await browser.page.screenshot({ path: `${prefix}/${filename}` })
+        if (filename.length) {
+          if (!fs.existsSync(prefix)) {
+            fs.mkdirSync(prefix)
+          }
+
+          if (filename.slice(-4) !== '.png' && filename.slice(-4) !== '.jpg') {
+            filename = `${filename}.jpg` // default to jpg if user does not provide a type
+          }
+          await browser.page.screenshot({ path: `${prefix}/${filename}` })
+        } else {
+          console.warn(`Must specify a file name`)
+        }
       },
     },
   })
