@@ -2,6 +2,7 @@
 
 const puppeteer = require('../lib/puppeteer')
 const commandLine = require('../lib/commandLine')
+const fs = require('fs')
 
 
 async function main() {
