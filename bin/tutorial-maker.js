@@ -12,6 +12,7 @@ async function main() {
   let pathPrefix = '.'
 
   const reader = new commandLine({
+    completer: true,
     commands: ['snap', 'path', 'quit'],
     commandFunctions: {
       quit: async (ref, args) => {
