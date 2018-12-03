@@ -40,10 +40,6 @@ async function main() {
     // answer exists in acceptedAnswers list, proceed with defaults
     browser = new puppeteer({ width, height })
     browser.init()
-    
-    setTimeout(() => {
-      browser.quit()
-    }, 5000)
   } else {
     let proceed = false
     let userWidth = null
@@ -74,10 +70,6 @@ async function main() {
 
     browser = new puppeteer({ width: userWidth, height: userHeight })
     browser.init()
-    
-    setTimeout(() => {
-      browser.quit()
-    }, 5000)
   }
 }
 
