@@ -25,6 +25,9 @@ async function main() {
         }
         pathPrefix = prefix
       },
+      snap: async (ref, args) => {
+        await browser.page.screenshot({ path: `${pathPrefix}/${args}` })
+      },
     },
   })
 
